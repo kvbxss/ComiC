@@ -1,24 +1,29 @@
 import React, { FunctionComponent } from 'react'
 
+//Navigation
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import Splash from '../screens/Splash'
+
+//Screens
+import Welcome from '../screens/Splash'
 import Home from '../screens/Home'
 import Details from '../screens/Details'
 
-type RootStackParamList = {
-    Splash: undefined;
+export type RootStackParamList = {
+    Welcome: undefined;
+    Home: undefined;
+    Details: undefined;
 };
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator<RootStackParamList>()
 
 const RootStack: FunctionComponent = () => {
     return (
     <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false}}/>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Details" component={Details} />
+            <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false}}/>
+            <Stack.Screen name="Home" component={Home}  options={{ headerShown: false}}/>
+            <Stack.Screen name="Details" component={Details}  options={{ headerShown: false}}/>
         </Stack.Navigator>
     </NavigationContainer>
     )
