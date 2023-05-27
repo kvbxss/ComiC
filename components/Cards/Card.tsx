@@ -1,10 +1,9 @@
-import { Image, Text, View } from 'react-native'
+import { Image, Text, View, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 import React, { FunctionComponent } from 'react'
 
 import {ScreenWidth}  from '../shared'
 import { colors } from '../colors'
-import { TouchableHighlight } from 'react-native-gesture-handler'
 
 
 
@@ -13,9 +12,7 @@ interface CardData {
   image: string;
 }
 
-export interface CardProps {
-  data: Array<CardData>;
-}
+
 
 
 const Card: FunctionComponent<CardData> = (props) => {
@@ -25,14 +22,16 @@ const Card: FunctionComponent<CardData> = (props) => {
       <ImageView>
         <Picture 
         source={{uri: props.image}}
-        resizeMode='cover'
+        resizeMode='contain'
         />
 
         
       </ImageView>
       </CardTouchable>
       <TextView>
-        <Name></Name>
+        <Name>
+          {props.name}
+        </Name>
       </TextView>
     </CardView>
   )
@@ -45,14 +44,12 @@ const CardView = styled(View)`
   width: ${ScreenWidth * 0.67}px;
   resize-mode: cover;
   overflow: hidden;
-  height: 300;
   border-radius: 20px;
   margin: 10px;
   shadow: 0px 0px 10px rgba(0,0,0,0.5);
-  background-color: ${colors.white};
 `
 
-const CardTouchable = styled(TouchableHighlight)`
+const CardTouchable = styled(TouchableOpacity)`
   height: 100%;
   border-radius: 20px;
 `
@@ -60,8 +57,7 @@ const CardTouchable = styled(TouchableHighlight)`
 
 const ImageView = styled(View)`
   width: 100%;
-  height: 80%; 
-  background-color: ${colors.dark};
+  height: 250px;
 `
 
 const Picture = styled(Image)`
