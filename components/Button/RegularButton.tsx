@@ -5,11 +5,12 @@ import { colors } from '../colors';
 import { fonts } from '../shared';
 
 const ButtonView = styled(TouchableOpacity)`
-    width: 100%;
+    width: 80%;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
-    background-color: ${colors.strongPink};
+    border: 1px solid ${colors.strongPink};
+    background-color: ${colors.lightPink};
     padding: 15px;
     `
 
