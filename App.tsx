@@ -1,7 +1,5 @@
 import React from 'react';
 import { useFonts } from 'expo-font';
-import styled from 'styled-components/native';
-import { colors } from './components/colors';
 
 import RootStack from './navigators/RootStack';
 
