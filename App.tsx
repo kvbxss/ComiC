@@ -4,9 +4,9 @@ import { useFonts } from 'expo-font';
 import RootStack from './navigators/RootStack';
 
 
-
 export default function App() {
-  
+ 
+
   const [loaded] = useFonts({
     SatoshiRegular: require('./assets/fonts/Satoshi-Regular.otf'),
     SatoshiBold: require('./assets/fonts/Satoshi-Bold.otf'),
@@ -17,8 +17,12 @@ export default function App() {
   if (!loaded) return null;
   
   return (
+    
     <RootStack />
-  );
-}
+   
+  )
+  }
+  
+
 
 
