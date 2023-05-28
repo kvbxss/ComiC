@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components/native";
 import {
   StyleSheet,
@@ -11,20 +11,69 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllCards } from "../service/Api";
 import { colors } from "./colors";
 import { ScreenHeight, ScreenWidth, fonts } from "./shared";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Page() {
   const navigation = useNavigation();
+  const flatListRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [animeCards, setAnimeCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEndReached, setIsEndReached] = useState(false);
 
-  const { data, isLoading } = useQuery(['posts'], fetchAllCards);
+  const fetchAnimeCards = async (page) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://animes5.p.rapidapi.com/?fields=id,title,main_picture,mal_id,year,mean,rank,studios,synopsis&limit=10&offset=${(page - 1) * 10}&order=rank&ascending=true`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-RapidAPI-Key": "07f27b6f8bmsh5ffd3390bbe6b27p114c21jsn70f95d227326",
+            "X-RapidAPI-Host": "animes5.p.rapidapi.com",
+          },
+        }
+      );
+      const data = await response.json();
+      const animeData = data?.animes || [];
+      return animeData;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const { data, isLoading: isQueryLoading, isError } = useQuery(
+    ["animeCards", currentPage],
+    () => fetchAnimeCards(currentPage),
+    {
+      keepPreviousData: true,
+      onSuccess: (fetchedData) => {
+        if (fetchedData.length > 0) {
+          setAnimeCards((prevCards) => [...prevCards, ...fetchedData]);
+        } else {
+          setIsEndReached(true);
+        }
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (!isQueryLoading && !isError && data?.length === 0) {
+        setIsEndReached(true);
+      }
+    }, [data, isQueryLoading, isError]);
 
   const renderCard = ({ item }) => (
     <View key={item.id} style={styles.card}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Details", { mal_id: item.mal_id })}
+        onPress={() =>
+          navigation.navigate("Details", { mal_id: item.mal_id })
+        }
       >
         <CardImage source={{ uri: item.main_picture.large }} />
       </TouchableOpacity>
@@ -38,35 +87,37 @@ export default function Page() {
     </View>
   );
 
+  const handleLoadMore = () => {
+    if (!isLoading && !isEndReached) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
   return (
     <Container>
       <Main>
         <Title>Scroll 🔎</Title>
-        <Description>Through your favourite animes</Description>
-        {isLoading ? (
+        <Description>Through your favorite animes</Description>
+        <FlatList
+          ref={flatListRef}
+          contentContainerStyle={styles.listView}
+          data={animeCards}
+          renderItem={renderCard}
+          keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.1}
+          onScrollBeginDrag={() => setIsEndReached(false)}
+        />
+        {isQueryLoading ? (
           <ActivityIndicator size="large" color={"#000"} />
-        ) : (
-          <FlatList
-            contentContainerStyle={styles.listView}
-            data={data?.animes}
-            renderItem={renderCard}
-            keyExtractor={(item) => item.id.toString()}
-            showsVerticalScrollIndicator={false}
-          />
-        )}
+        ) : null}
       </Main>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 24,
-    height: "100%",
-  },
   card: {
     width: "100%",
     paddingVertical: 12,
@@ -138,3 +189,4 @@ const CardDescription = styled(Text)`
   color: ${colors.white};
   font-family: ${fonts.SatoshiLight};
 `;
+
