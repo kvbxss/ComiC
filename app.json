@@ -4,12 +4,16 @@
     "slug": "ComiC",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/iconone.png",
     "userInterfaceStyle": "light",
+    "androidNavigationBar": {
+      "visible": false,
+      "backgroundColor": "#312d2d"
+    },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashone.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#312d2d"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,8 +23,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/iconone.png",
+        "backgroundColor": "#312d2d"
       }
     },
     "web": {
