@@ -49,14 +49,22 @@ export default function Page() {
 
   const { data, isLoading: isQueryLoading, isError } = useQuery(
     ["animeCards", currentPage],
+    //Array działa jak cache key i jeżeli się zmieni to query zostanie wykonane ponownie
     () => fetchAnimeCards(currentPage),
+    //Funkcja która zwraca dane
     {
       keepPreviousData: true,
+      //Jeżeli jest true to dane z poprzedniego query zostaną zachowane
       onSuccess: (fetchedData) => {
-        if (fetchedData.length > 0) {
+        //Jeżeli query bedzie dobre to zostanie wykonana ta funkcja
+        if (fetchedData.length > 0) 
+        //Jeżeli długość danych jest większa niz 0 to sa dodane do tablicy  
+        {
           setAnimeCards((prevCards) => [...prevCards, ...fetchedData]);
+          //Dodaje nowe dane do tablicy
         } else {
           setIsEndReached(true);
+          //Jeżeli nie ma więcej danych to ustawia na true
         }
       },
     }
@@ -65,8 +73,10 @@ export default function Page() {
   useEffect(() => {
     if (!isQueryLoading && !isError && data?.length === 0) {
         setIsEndReached(true);
+        //Jeżeli nie ma więcej danych to ustawia na true
       }
     }, [data, isQueryLoading, isError]);
+    //Jeżeli dane się zmienią to useEffect zostanie wykonany ponownie
 
   const renderCard = ({ item }) => (
     <View key={item.id} style={styles.card}>
@@ -90,6 +100,7 @@ export default function Page() {
   const handleLoadMore = () => {
     if (!isLoading && !isEndReached) {
       setCurrentPage((prevPage) => prevPage + 1);
+      //Jeżeli nie jest w trakcie ładowania i nie jest na końcu to zwiększa currentPage o 1
     }
   };
 
@@ -100,6 +111,7 @@ export default function Page() {
         <Description>Through your favorite animes</Description>
         <FlatList
           ref={flatListRef}
+          // ref jest potrzebny do scrollowania do góry
           contentContainerStyle={styles.listView}
           data={animeCards}
           renderItem={renderCard}

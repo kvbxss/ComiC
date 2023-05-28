@@ -20,8 +20,9 @@ export default function CardsDetail({ mal_id }) {
     const navigation = useNavigation();
 
     const { data, isLoading } = useQuery(['cardDetails', mal_id], 
+    //Array działa jak cache key i jeżeli się zmieni to query zostanie wykonane ponownie
     () => fetchCardDetailsById(mal_id));
-
+    //Funkcja która zwraca dane
     const renderCard = (item) => (
         
         <CardView key={item.mal_id}>
@@ -44,6 +45,7 @@ export default function CardsDetail({ mal_id }) {
           <ActivityIndicator size="large" color={"#000"} />
         ) : (
        data && renderCard(data)
+       //Jeżeli data istnieje to wywołaj funkcję renderCard(data)
         )}
     </AnimeMovie>
     )
