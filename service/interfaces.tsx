@@ -3,7 +3,7 @@ export interface Anime {
     title: string;
     title_english: string;
     mal_id: number;
-    main_picture?: {
+    main_picture: {
       large: string;
       medium: string;
     };

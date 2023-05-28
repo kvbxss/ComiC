@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, Image, Text, ActivityIndicator } from 'react-native';
+import { 
+    View, 
+    Image, 
+    Text, 
+    ActivityIndicator 
+} from 'react-native';
 import styled from 'styled-components';
 import { ScreenHeight, fonts } from './shared';
 import { colors } from './colors';
@@ -17,17 +22,19 @@ export default function CardsDetail({ mal_id }) {
     const { data, isLoading } = useQuery(['cardDetails', mal_id], 
     () => fetchCardDetailsById(mal_id));
 
-    const renderCard = ( item ) => (
-        <View key={item.mal_id}>
-          <CardView>
-        <AnimeMovieImage source={{ uri: item.main_picture}} />
+    const renderCard = (item) => (
+        
+        <CardView key={item.mal_id}>
+        <ImageWrapper>
+        <AnimeMovieImage source={{ uri: item.main_picture.large }} />
+        </ImageWrapper>
         <AnimeMovieTitle>{item.title}</AnimeMovieTitle>
-        <AnimeMovieRank>⭐ {item.rank}</AnimeMovieRank>
-        <AnimeMovieYear>{item.year}</AnimeMovieYear>
+        <AnimeMovieRank>⭐ {item.mean} | {item.year}</AnimeMovieRank>
+        <AnimeMovieRank>🎥 {item.studios}</AnimeMovieRank>
         <AnimeMovieDescription>{item.synopsis}</AnimeMovieDescription>
         <RegularButton onPress={() => navigation.goBack()}>Go Back!</RegularButton>
         </CardView>
-        </View>
+        
       );
     
 
@@ -38,7 +45,7 @@ export default function CardsDetail({ mal_id }) {
         ) : (
        data && renderCard(data)
         )}
-      </AnimeMovie>
+    </AnimeMovie>
     )
 }
 
@@ -51,17 +58,28 @@ const AnimeMovie = styled(View)`
 `
 
 const CardView = styled(View)`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+`
+const ImageWrapper = styled(View)`
+    width: 100%;
+    height: 300px;
+    aspect-ratio: 3/4 ;
+    margin-bottom: 20px;
+
 `
 
 const AnimeMovieImage = styled(Image)`
   width: 100%;
-  height: 400px;
+  height: 300px;
   border-radius: 10px;
   margin-bottom: 20px;
 ` 
 
 const AnimeMovieTitle = styled(Text)`
-  font-size: 20px;
+  font-size: 24px;
   font-family: ${fonts.SatoshiBold};
   color: ${colors.white};
   margin-bottom: 10px;
@@ -74,15 +92,9 @@ const AnimeMovieRank = styled(Text)`
   margin-bottom: 10px;
 `
 
-const AnimeMovieYear = styled(Text)`
-  font-size: 20px;
-  font-family: ${fonts.SatoshiBold};
-  color: ${colors.white};
-  margin-bottom: 10px;
-`
 
 const AnimeMovieDescription = styled(Text)`
-  font-size: 10px;
+  font-size: 9px;
   font-family: ${fonts.SatoshiLight};
   color: ${colors.white};
   margin-bottom: 10px;
