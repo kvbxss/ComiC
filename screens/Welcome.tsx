@@ -39,7 +39,7 @@ const Welcome: FunctionComponent<Props> = ({ navigation }) => {
     <Wrapper>
         <Header>Hello to ComiC! 👋</Header>
         
-        <Description> Discover a world of colorful superheroes, thrilling adventures, and immersive storytelling with our comic book mobile application. </Description>
+        <Description> Discover a world of colorful superheroes, thrilling adventures, and immersive storytelling with our anime mobile application. </Description>
         
         <RegularButton onPress={() => { navigation.navigate("Home")}}>Get Started!</RegularButton>
         <StatusBar style="light" />

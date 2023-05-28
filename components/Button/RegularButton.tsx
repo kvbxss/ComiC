@@ -15,7 +15,7 @@ const ButtonView = styled(TouchableOpacity)`
     `
 
 const ButtonText = styled(Text)`
-    font-family: ${fonts.SatoshiRegular};
+    font-family: ${fonts.SatoshiBold};
     font-size: 18px;
     color: ${colors.white};
 `
