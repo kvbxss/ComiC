@@ -3,10 +3,19 @@ export interface Anime {
     title: string;
     title_english: string;
     mal_id: number;
-    main_picture: {
+    main_picture?: {
       large: string;
       medium: string;
     };
+    year: number;
+    mean: number;
+    rank: number;
+    studios: {
+      nodes: {
+        name: string;
+      }[];
+    };
+    synopsis: string;
   }
   
   export interface AnimeResponse {
