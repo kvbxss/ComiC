@@ -7,7 +7,7 @@
     "icon": "./assets/iconone.png",
     "userInterfaceStyle": "light",
     "androidNavigationBar": {
-      "visible": false,
+      "visible": "sticky-immersive",
       "backgroundColor": "#312d2d"
     },
     "splash": {
@@ -25,10 +25,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/iconone.png",
         "backgroundColor": "#312d2d"
-      }
+      },
+      "package": "com.kvbxss.ComiC"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "74e7cdd1-a3fa-449b-b777-7418262b4564"
+      }
     }
   }
 }
