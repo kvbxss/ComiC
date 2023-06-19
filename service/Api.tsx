@@ -5,7 +5,7 @@ export const fetchCardDetailsById = async (mal_id: number) => {
 	const options = {
 		method: 'GET',
 		headers: {
-			'X-RapidAPI-Key': '07f27b6f8bmsh5ffd3390bbe6b27p114c21jsn70f95d227326',
+			'X-RapidAPI-Key': '',
 			'X-RapidAPI-Host': 'animes5.p.rapidapi.com'
 		},
 	};
