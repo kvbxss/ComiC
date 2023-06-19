@@ -43,6 +43,14 @@ To set up the ComiC app on your local machine, follow these steps:
 
 6. Use the Expo CLI to launch the app on your desired platform (iOS, Android, or web). You can run the app on a connected physical device or an emulator/simulator.
 
+## Demo
+
+You can also try out the ComiC app by accessing it through Expo Go. Click on the following link:
+
+[ComiC Expo Link](https://expo.dev/@kvbxss/ComiC?serviceType=classic&diistribution=expo-go)
+
+This link will allow you to open the app in Expo Go on your mobile device and explore its features.
+
 ## Technologies Used
 
 - React Native
@@ -51,6 +59,8 @@ To set up the ComiC app on your local machine, follow these steps:
 - @tanstack/react-query
 - styled-components
 - RapidAPI
+
+o project.
 
 ## Contributing
 
